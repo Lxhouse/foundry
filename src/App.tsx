@@ -1,11 +1,7 @@
+import EditLayout from "@/layouts/EditLayout";
+
 function App() {
-  return (
-    <div className="App">
-      <h1 className="text-3xl text-center font-bold underline">
-        Hello Foundry !
-      </h1>
-    </div>
-  );
+  return <EditLayout />
 }
 
 export default App;
