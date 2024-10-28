@@ -1,5 +1,5 @@
 import { Input, Typography } from 'antd';
-import { FoundryInputDefaultProps, FoundryInputPropsType } from './Interface';
+import { FoundryInputDefaultProps, FoundryInputPropsType } from './interface';
 const { Paragraph } = Typography;
 function FoundryInput(props: FoundryInputPropsType) {
   const { title, placeholder } = { ...FoundryInputDefaultProps, ...props };
