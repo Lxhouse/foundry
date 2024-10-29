@@ -4,7 +4,7 @@ import useEditStore from "@/store/useEditStore";
 import { useEffect } from "react";
 function useLoadEditData() {
   const { id = "" } = useParams();
-  const { resetComponents } = useEditStore();
+  const { resetComponents, changeSelectedId } = useEditStore();
   // async function load() {
   //   return {
   //     id: id,
@@ -38,6 +38,8 @@ function useLoadEditData() {
         },
       },
     ]);
+    // 加载完数据,清空选择
+    changeSelectedId("");
   }, []);
   return {
     loading: false,

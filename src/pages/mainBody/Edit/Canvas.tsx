@@ -1,12 +1,12 @@
-import FoundryInput from '@/components/FoundryInput/Component';
-import FoundryTitle from '@/components/FoundryTitle/Component';
+
 import useLoadEditData from '@/hooks/useLoadEditData';
 import useGetComponentInfo from '@/hooks/useGetComponentinfo';
-import { ComponentInfoType } from '@/store/useEditStore';
+import useEditStore, { ComponentInfoType } from '@/store/useEditStore';
 import { getComponentConfByType } from '@/components';
 
 function getComponent(componentInfo: ComponentInfoType) {
   const { type, props } = componentInfo || {}
+
   const componentConf = getComponentConfByType(type)
   if (!componentConf) return
   const { Component } = componentConf
@@ -15,33 +15,37 @@ function getComponent(componentInfo: ComponentInfoType) {
 }
 function Canvas() {
   const { loading } = useLoadEditData();
+  const { selectedId, changeSelectedId } = useEditStore()
   const { componentList } = useGetComponentInfo();
 
   if (loading) return <div>loading....</div>;
   return (
-    <div className=" w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
+    <div className="w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
       {componentList.map(c => {
         const { fe_id } = c
-        const target = getComponent(c)
-        if (!target) return
-        return <div key={fe_id} className="m-1 border border-white p-1 rounded hover:border-gray-300">
-          <div className="pointer-events-none">
-            {target}
-          </div>
-        </div>
-      })}
+        const target = getComponent(c);
 
-      {/* <div className="m-3 border border-white p-3 rounded hover:border-gray-300">
-        <div className="pointer-events-none">
-          <FoundryTitle />
-        </div>
-      </div>
-      <div className="m-3 border border-white p-3 rounded hover:border-gray-300">
-        <div className="pointer-events-none">
-          <FoundryInput />
-        </div>
-      </div> */}
+        // 如果找不到目标，返回 null
+        if (!target) return null;
+
+        const isSelected = fe_id === selectedId;
+        const borderColor = isSelected ? 'border-sky-400' : 'border-white';
+        const hoverColor = isSelected ? 'hover:border-sky-400' : 'hover:border-gray-300';
+
+        return (
+          <div
+            key={fe_id}
+            className={`m-2 border-2 p-3 rounded ${borderColor} ${hoverColor}`}
+            onClick={() => changeSelectedId(fe_id)}
+          >
+            <div className="pointer-events-none">
+              {target}
+            </div>
+          </div>
+        );
+      })}
     </div>
+
   );
 }
 
