@@ -25,5 +25,6 @@ const componentConfList: (FoundryInputConfType | FoundryTitleConfType)[] = [
 ];
 
 export function getComponentConfByType(type: string) {
+  if (!type) return;
   return componentConfList.find((c) => c.type === type);
 }
