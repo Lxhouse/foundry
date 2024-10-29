@@ -1,6 +1,6 @@
 import { ComponentPropsType } from "@/components";
 import { create } from "zustand";
-
+import { getNextSelectedId } from "./utils";
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
@@ -23,6 +23,7 @@ type ComponentsStateOperation = {
   resetComponents: (newComponentList: ComponentInfoType[]) => void;
   addComponents: (newComponent: ComponentInfoType) => void;
   changeComponentProps: (newProps: ComponentPropsType) => void;
+  removeSelectedComponent: () => void;
 };
 
 // 创建 Zustand 状态
@@ -55,10 +56,19 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
 
     changeComponentProps: (newProps: ComponentPropsType) =>
       set((state) => ({
-        componentList: state.componentList.map((comp) =>
-          comp.fe_id === state.selectedId ? { ...comp, props: newProps } : comp
+        componentList: state.componentList.map((c) =>
+          c.fe_id === state.selectedId ? { ...c, props: newProps } : c
         ),
       })),
+    removeSelectedComponent: () =>
+      set((state) => {
+        const { selectedId, componentList } = state;
+        const newSelectId = getNextSelectedId(selectedId, componentList);
+        return {
+          componentList: componentList.filter((c) => c.fe_id !== selectedId),
+          selectedId: newSelectId,
+        };
+      }),
   })
 );
 
