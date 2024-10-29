@@ -24,6 +24,18 @@ const componentConfList: (FoundryInputConfType | FoundryTitleConfType)[] = [
   FoundryTitleConf,
 ];
 
+export const componentConfGroup = [
+  {
+    groupId: "TextGroup",
+    groupName: "文本显示",
+    components: [FoundryTitleConf],
+  },
+  {
+    groupId: "InputCroup",
+    groupName: "用户输入",
+    components: [FoundryInputConf],
+  },
+];
 export function getComponentConfByType(type: string) {
   if (!type) return;
   return componentConfList.find((c) => c.type === type);

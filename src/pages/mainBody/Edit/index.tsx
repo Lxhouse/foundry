@@ -7,11 +7,12 @@ function Edit() {
   const { changeSelectedId } = useEditStore()
   return (
     <div className="flex w-screen h-screen bg-slate-200 p-2">
-      <Controls />
+
+      <Materiel />
       <div className="flex flex-1 items-center justify-center" onClick={() => changeSelectedId("")}>
         <Canvas />
       </div>
-      <Materiel />
+      <Controls />
     </div>
   );
 }
