@@ -12,7 +12,7 @@ function useLoadEditData() {
   // }
   // const { loading, data, error } = useRequest(load);
   useEffect(() => {
-    resetComponents([
+    const data = [
       {
         fe_id: "1",
         type: "FoundryTitle",
@@ -37,9 +37,10 @@ function useLoadEditData() {
           placeholder: "请快2222快输入。。。。。",
         },
       },
-    ]);
+    ];
+    resetComponents(data);
     // 加载完数据,清空选择
-    changeSelectedId("");
+    data.length > 0 && changeSelectedId(data[0].fe_id);
   }, []);
   return {
     loading: false,

@@ -25,7 +25,6 @@ function Canvas() {
         const { fe_id } = c
         const target = getComponent(c);
 
-        // 如果找不到目标，返回 null
         if (!target) return null;
 
         const isSelected = fe_id === selectedId;
@@ -36,7 +35,10 @@ function Canvas() {
           <div
             key={fe_id}
             className={`m-2 border-2 p-3 rounded ${borderColor} ${hoverColor}`}
-            onClick={() => changeSelectedId(fe_id)}
+            onClick={(e) => {
+              e.stopPropagation()
+              changeSelectedId(fe_id)
+            }}
           >
             <div className="pointer-events-none">
               {target}
