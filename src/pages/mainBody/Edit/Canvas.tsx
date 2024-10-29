@@ -19,12 +19,12 @@ function Canvas() {
 
   if (loading) return <div>loading....</div>;
   return (
-    <div className=" w-[386px] h-5/6 bg-white rounded p-2">
+    <div className=" w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
       {componentList.map(c => {
         const { fe_id } = c
         const target = getComponent(c)
         if (!target) return
-        return <div key={fe_id} className="m-3 border border-white p-3 rounded hover:border-gray-300">
+        return <div key={fe_id} className="m-1 border border-white p-1 rounded hover:border-gray-300">
           <div className="pointer-events-none">
             {target}
           </div>
