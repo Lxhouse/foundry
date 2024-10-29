@@ -1,9 +1,9 @@
 import { Space, Button, Tooltip, Popconfirm } from "antd"
 
-import { DeleteOutlined } from "@ant-design/icons"
+import { DeleteOutlined, EyeInvisibleOutlined } from "@ant-design/icons"
 import useEditStore from "@/store/useEditStore"
 function EditToolbar() {
-    const { removeSelectedComponent } = useEditStore()
+    const { removeSelectedComponent, changeComponentHidden } = useEditStore()
     function handleDelete() {
         removeSelectedComponent()
     }
@@ -20,6 +20,9 @@ function EditToolbar() {
                    
                 </Tooltip> */}
             </Popconfirm>
+        </Tooltip>
+        <Tooltip title="隐藏">
+            <Button shape="circle" icon={<EyeInvisibleOutlined />} onClick={() => changeComponentHidden(true)} />
         </Tooltip>
     </Space >
 }

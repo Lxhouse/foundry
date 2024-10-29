@@ -21,7 +21,7 @@ function Canvas() {
   if (loading) return <div>loading....</div>;
   return (
     <div className="w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
-      {componentList.map(c => {
+      {componentList.filter(c => !c.isHidden).map(c => {
         const { fe_id } = c
         const target = getComponent(c);
 

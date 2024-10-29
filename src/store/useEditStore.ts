@@ -5,6 +5,7 @@ export type ComponentInfoType = {
   fe_id: string;
   type: string;
   title: string;
+  isHidden: boolean;
   props: ComponentPropsType;
 };
 
@@ -24,6 +25,7 @@ type ComponentsStateOperation = {
   addComponents: (newComponent: ComponentInfoType) => void;
   changeComponentProps: (newProps: ComponentPropsType) => void;
   removeSelectedComponent: () => void;
+  changeComponentHidden: (isHidden: boolean) => void;
 };
 
 // 创建 Zustand 状态
@@ -66,6 +68,17 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         const newSelectId = getNextSelectedId(selectedId, componentList);
         return {
           componentList: componentList.filter((c) => c.fe_id !== selectedId),
+          selectedId: newSelectId,
+        };
+      }),
+    changeComponentHidden: (isHidden) =>
+      set((state) => {
+        const { selectedId, componentList } = state;
+        const newSelectId = getNextSelectedId(selectedId, componentList);
+        return {
+          componentList: componentList.map((c) =>
+            c.fe_id === selectedId ? { ...c, isHidden: isHidden } : c
+          ),
           selectedId: newSelectId,
         };
       }),

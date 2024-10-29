@@ -8,8 +8,9 @@ import { ComponentInfoType } from "./useEditStore";
  */
 export function getNextSelectedId(
   fe_id: string,
-  componentList: ComponentInfoType[]
+  _componentList: ComponentInfoType[]
 ) {
+  const componentList = _componentList.filter((c) => !c.isHidden);
   // 查找当前组件的索引
   const index = componentList.findIndex((c) => c.fe_id === fe_id);
 
