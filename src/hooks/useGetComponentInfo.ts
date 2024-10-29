@@ -1,11 +1,9 @@
-import useEditStore from '@/store/useEditStore';
-import useComponentsStore from '@/store/useComponentsStore';
+import useEditStore from "@/store/useEditStore";
 
 function useGetComponentInfo() {
-  const { componentList } = useEditStore();
-  const { components } = useComponentsStore();
-
-  return { componentList };
+  const { selectedId, componentList } = useEditStore();
+  const selectedComponent = componentList.find((c) => c.fe_id === selectedId);
+  return { componentList, selectedComponent };
 }
 
 export default useGetComponentInfo;

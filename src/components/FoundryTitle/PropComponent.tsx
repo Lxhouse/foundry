@@ -1,8 +1,8 @@
 import { Form, Input, Select, Checkbox } from 'antd';
 import { useEffect } from "react"
-import { FoundryInputPropsType, FoundryTitlePropsType } from './interface';
+import { FoundryTitlePropsType } from './interface';
 
-function PropComponents(props: FoundryTitlePropsType) {
+function PropComponent(props: FoundryTitlePropsType) {
     const { text, level, isCenter } = props
     const [form] = Form.useForm()
 
@@ -17,4 +17,4 @@ function PropComponents(props: FoundryTitlePropsType) {
 }
 
 
-export default PropComponents
+export default PropComponent

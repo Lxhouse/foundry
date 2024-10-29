@@ -1,6 +1,6 @@
 
 import useLoadEditData from '@/hooks/useLoadEditData';
-import useGetComponentInfo from '@/hooks/useGetComponentinfo';
+import useGetComponentInfo from '@/hooks/useGetComponentInfo';
 import useEditStore, { ComponentInfoType } from '@/store/useEditStore';
 import { getComponentConfByType } from '@/components';
 
