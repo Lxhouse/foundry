@@ -1,21 +1,25 @@
 import FoundryInputConf, {
   FoundryInputPropsType,
-} from '@/components/FoundryInput';
+} from "@/components/FoundryInput";
 import FoundryTitleConf, {
   FoundryTitlePropsType,
-} from '@/components/FoundryTitle';
-import { FC } from 'react';
+} from "@/components/FoundryTitle";
+import { FC } from "react";
 
-export type ComponentPropsType = FoundryInputPropsType & FoundryTitlePropsType;
-
-export type ComponentConfType = {
+export type ComponentConfType<PropsType> = {
   title: string;
   type: string;
-  Component: FC<ComponentPropsType>;
-  defaultProps: ComponentPropsType;
+  Component: FC<PropsType>;
+  defaultProps: PropsType;
 };
 
-const componentConfList: ComponentConfType[] = [
+// 定义 FoundryInputConfType 和 FoundryTitleConfType 类型
+type FoundryInputConfType = ComponentConfType<FoundryInputPropsType>;
+type FoundryTitleConfType = ComponentConfType<FoundryTitlePropsType>;
+
+export type ComponentPropsType = FoundryInputPropsType | FoundryTitlePropsType;
+// 定义 componentConfList 为联合类型数组
+const componentConfList: (FoundryInputConfType | FoundryTitleConfType)[] = [
   FoundryInputConf,
   FoundryTitleConf,
 ];
