@@ -32,6 +32,7 @@ function useLoadEditData() {
         fe_id: "3",
         type: "FoundryInput",
         title: "lalal2",
+        isHidden: true,
         props: {
           title: "lalll1",
           placeholder: "请快2222快输入。。。。。",
