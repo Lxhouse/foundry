@@ -11,14 +11,13 @@ function EditToolbar() {
         [componentList, selectedId]
     );
 
-    const handleDelete = () => removeSelectedComponent();
 
     return (
         <Space>
             <Tooltip title="删除">
                 <Popconfirm
                     title="您确定要删除选中的组件吗？"
-                    onConfirm={handleDelete}
+                    onConfirm={removeSelectedComponent}
                     okText="确认"
                     cancelText="取消"
                 >
