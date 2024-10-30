@@ -22,7 +22,7 @@ function Canvas() {
   return (
     <div className="w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
       {componentList.filter(c => !c.isHidden).map(c => {
-        const { fe_id } = c
+        const { fe_id, isLocked } = c
         const target = getComponent(c);
 
         if (!target) return null;
@@ -30,11 +30,11 @@ function Canvas() {
         const isSelected = fe_id === selectedId;
         const borderColor = isSelected ? 'border-sky-400' : 'border-white';
         const hoverColor = isSelected ? 'hover:border-sky-400' : 'hover:border-gray-300';
-
+        const isLockedStyle = isLocked ? 'opacity-50 cursor-not-allowed' : ''
         return (
           <div
             key={fe_id}
-            className={`m-2 border-2 p-3 rounded ${borderColor} ${hoverColor}`}
+            className={`m-2 border-2 p-3 rounded ${borderColor} ${hoverColor} ${isLockedStyle}`}
             onClick={(e) => {
               e.stopPropagation()
               changeSelectedId(fe_id)

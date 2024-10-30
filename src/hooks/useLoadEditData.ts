@@ -23,8 +23,9 @@ function useLoadEditData() {
         fe_id: "2",
         type: "FoundryInput",
         title: "lalal2",
+        isLocked: true,
         props: {
-          title: "输入框裱吞吞吐吐",
+          title: "输入框裱吞锁定测试组件",
           placeholder: "请快快输入。。。。。",
         },
       },
