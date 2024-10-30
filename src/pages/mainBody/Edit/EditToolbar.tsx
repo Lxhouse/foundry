@@ -4,7 +4,7 @@ import useEditStore from "@/store/useEditStore";
 import { useMemo } from "react";
 
 function EditToolbar() {
-    const { removeSelectedComponent, changeComponentStates, selectedId, componentList } = useEditStore();
+    const { selectedId, componentList, copiedComponent, removeSelectedComponent, changeSelectComponentStates, copySelectedComponent, pasteCopiedComponent } = useEditStore();
 
     const isLocked = useMemo(() =>
         componentList.find(c => c.fe_id === selectedId)?.isLocked,
@@ -29,7 +29,7 @@ function EditToolbar() {
                 <Button
                     shape="circle"
                     icon={<EyeInvisibleOutlined />}
-                    onClick={() => changeComponentStates({ isHidden: true }, { needNext: true })}
+                    onClick={() => changeSelectComponentStates({ isHidden: true }, { needNext: true })}
                 />
             </Tooltip>
             <Tooltip title="锁定">
@@ -37,21 +37,22 @@ function EditToolbar() {
                     shape="circle"
                     type={isLocked ? 'primary' : 'default'}
                     icon={<LockOutlined />}
-                    onClick={() => changeComponentStates({ isLocked: !isLocked })}
+                    onClick={() => changeSelectComponentStates({ isLocked: !isLocked })}
                 />
             </Tooltip>
             <Tooltip title="复制">
                 <Button
                     shape="circle"
                     icon={<CopyOutlined />}
-                // onClick={() => changeComponentStates({ isLocked: !isLocked })}
+                    onClick={copySelectedComponent}
                 />
             </Tooltip>
             <Tooltip title="粘贴">
                 <Button
+                    disabled={!copiedComponent}
                     shape="circle"
                     icon={<BlockOutlined />}
-                // onClick={() => changeComponentStates({ isLocked: !isLocked })}
+                    onClick={pasteCopiedComponent}
                 />
             </Tooltip>
         </Space>

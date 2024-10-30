@@ -74,6 +74,7 @@ function useLoadEditData() {
     resetComponents({
       componentList: mockComponentInfoData,
       selectedId: mockComponentInfoData[0].fe_id,
+      copiedComponent: null,
     });
   }, []);
   return {

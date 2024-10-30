@@ -2,6 +2,7 @@ import { ComponentPropsType } from "@/components";
 import { create } from "zustand";
 import cloneDeep from "lodash.clonedeep";
 import { getNextSelectedId } from "./utils";
+import { message } from "antd";
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
@@ -34,6 +35,7 @@ type ComponentsStateOperation = {
     options?: { needNext: boolean }
   ) => void;
   copySelectedComponent: () => void;
+  pasteCopiedComponent: () => void;
 };
 
 // 创建 Zustand 状态
@@ -103,8 +105,22 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         // 深拷贝并删除 `fe_id` 属性
         const copiedComponent = cloneDeep(selectedComponent);
         delete copiedComponent.fe_id;
-
+        message.success("复制成功");
         return { copiedComponent };
+      }),
+    pasteCopiedComponent: () =>
+      set((state) => {
+        const { copiedComponent, addComponents } = state;
+        if (!copiedComponent) return {};
+
+        const newComponent = {
+          ...cloneDeep(copiedComponent),
+          fe_id: new Date().getTime().toString(),
+        };
+
+        addComponents(newComponent);
+
+        return {};
       }),
   })
 );
