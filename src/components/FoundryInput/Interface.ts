@@ -1,6 +1,7 @@
 export type FoundryInputPropsType = {
   title?: string;
   placeholder?: string;
+  disabled: boolean;
   onChange?: (newProps: FoundryInputPropsType) => void;
 };
 

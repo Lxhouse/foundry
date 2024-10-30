@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { FoundryInputPropsType } from './interface';
 
 function PropComponent(props: FoundryInputPropsType) {
-    const { title, placeholder, onChange } = props;
+    const { title, placeholder, onChange, disabled } = props;
     const [form] = Form.useForm();
 
     // 使用 useEffect 来更新表单字段值
@@ -23,6 +23,7 @@ function PropComponent(props: FoundryInputPropsType) {
             form={form}
             layout="vertical"
             onValuesChange={handleValueChange}
+            disabled={disabled}
         >
             <Form.Item
                 label="标题"

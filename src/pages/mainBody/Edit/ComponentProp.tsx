@@ -9,14 +9,14 @@ function ComponentProp() {
     const { changeComponentProps } = useEditStore()
     if (!selectedComponent) return <Empty description="未选中组件" />;
 
-    const { type, props } = selectedComponent;
+    const { type, props, isLocked } = selectedComponent;
     const componentConf = getComponentConfByType(type);
     const PropComponent = componentConf?.PropComponent;
     function changeProps(newProps: ComponentPropsType) {
         if (!selectedComponent) return
         changeComponentProps(newProps)
     }
-    return PropComponent ? <PropComponent {...props} onChange={changeProps} /> : <Empty description="未选中组件" />;
+    return PropComponent ? <PropComponent {...props} onChange={changeProps} disabled={isLocked} /> : <Empty description="未选中组件" />;
 }
 
 export default ComponentProp;

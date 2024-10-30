@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { FoundryTitlePropsType } from './interface';
 
 function PropComponent(props: FoundryTitlePropsType) {
-    const { text, level, isCenter, onChange } = props;
+    const { text, level, isCenter, onChange, disabled } = props;
     const [form] = Form.useForm();
 
     // 在 props 改变时更新表单字段
@@ -23,6 +23,7 @@ function PropComponent(props: FoundryTitlePropsType) {
             form={form}
             layout="vertical"
             onValuesChange={handleValueChange}
+            disabled={disabled}
         >
             <Form.Item
                 label="标题内容"
