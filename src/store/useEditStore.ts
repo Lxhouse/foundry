@@ -26,7 +26,10 @@ type ComponentsStateOperation = {
   addComponents: (newComponent: ComponentInfoType) => void;
   changeComponentProps: (newProps: ComponentPropsType) => void;
   removeSelectedComponent: () => void;
-  changeComponentHidden: (isHidden: boolean) => void;
+  changeComponentStates: (
+    newStates: Partial<ComponentInfoType>,
+    options?: { needNext: boolean }
+  ) => void;
 };
 
 // 创建 Zustand 状态
@@ -72,15 +75,16 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
           selectedId: newSelectId,
         };
       }),
-    changeComponentHidden: (isHidden) =>
+    changeComponentStates: (newStates, options = { needNext: false }) =>
       set((state) => {
+        const { needNext } = options;
         const { selectedId, componentList } = state;
         const newSelectId = getNextSelectedId(selectedId, componentList);
         return {
           componentList: componentList.map((c) =>
-            c.fe_id === selectedId ? { ...c, isHidden: isHidden } : c
+            c.fe_id === selectedId ? { ...c, ...newStates } : c
           ),
-          selectedId: newSelectId,
+          selectedId: needNext ? newSelectId : selectedId,
         };
       }),
   })
