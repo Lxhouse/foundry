@@ -41,6 +41,8 @@ type ComponentsStateOperation = {
   ) => void; // 修改选中组件的状态
   copySelectedComponent: () => void; // 复制选中组件
   pasteCopiedComponent: () => void; // 粘贴复制的组件
+  selectPreviousComponent: () => void; // 选中上一个组件
+  selectNextComponent: () => void; // 选中下一个组件
 };
 
 // 创建 Zustand 状态管理
@@ -138,6 +140,24 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         addComponents(newComponent); // 添加新的组件
 
         return {};
+      }),
+
+    // 选中上一个组件
+    selectPreviousComponent: () =>
+      set((state) => {
+        const { selectedId, componentList } = state;
+        const index = componentList.findIndex((c) => c.fe_id === selectedId);
+        const previousIndex = index > 0 ? index - 1 : componentList.length - 1; // 循环选择
+        return { selectedId: componentList[previousIndex].fe_id };
+      }),
+
+    // 选中下一个组件
+    selectNextComponent: () =>
+      set((state) => {
+        const { selectedId, componentList } = state;
+        const index = componentList.findIndex((c) => c.fe_id === selectedId);
+        const nextIndex = index < componentList.length - 1 ? index + 1 : 0; // 循环选择
+        return { selectedId: componentList[nextIndex].fe_id };
       }),
   })
 );
