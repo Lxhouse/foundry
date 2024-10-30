@@ -1,5 +1,6 @@
 import { ComponentPropsType } from "@/components";
 import { create } from "zustand";
+import cloneDeep from "lodash.clonedeep";
 import { getNextSelectedId } from "./utils";
 export type ComponentInfoType = {
   fe_id: string;
@@ -13,23 +14,26 @@ export type ComponentInfoType = {
 export type ComponentsStateType = {
   selectedId: string;
   componentList: ComponentInfoType[];
+  copiedComponent: ComponentInfoType | null;
 };
 
 const INIT_STATE: ComponentsStateType = {
   selectedId: "",
   componentList: [],
+  copiedComponent: null,
 };
 
 type ComponentsStateOperation = {
   changeSelectedId: (id: string) => void;
-  resetComponents: (newComponentList: ComponentInfoType[]) => void;
+  resetComponents: (newStates: Partial<ComponentsStateType>) => void;
   addComponents: (newComponent: ComponentInfoType) => void;
   changeComponentProps: (newProps: ComponentPropsType) => void;
   removeSelectedComponent: () => void;
-  changeComponentStates: (
+  changeSelectComponentStates: (
     newStates: Partial<ComponentInfoType>,
     options?: { needNext: boolean }
   ) => void;
+  copySelectedComponent: () => void;
 };
 
 // 创建 Zustand 状态
@@ -37,12 +41,12 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
   (set) => ({
     ...INIT_STATE,
 
-    resetComponents: (newComponentList: ComponentInfoType[] = []) =>
-      set({ componentList: newComponentList }),
+    resetComponents: (newStates) =>
+      set((state) => ({ ...state, ...newStates })),
 
-    changeSelectedId: (id: string) => set({ selectedId: id }),
+    changeSelectedId: (id) => set({ selectedId: id }),
 
-    addComponents: (newComponent: ComponentInfoType) =>
+    addComponents: (newComponent) =>
       set((state) => {
         const { selectedId, componentList } = state;
         const index = componentList.findIndex((c) => c.fe_id === selectedId);
@@ -60,7 +64,7 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         };
       }),
 
-    changeComponentProps: (newProps: ComponentPropsType) =>
+    changeComponentProps: (newProps) =>
       set((state) => ({
         componentList: state.componentList.map((c) =>
           c.fe_id === state.selectedId ? { ...c, props: newProps } : c
@@ -75,7 +79,7 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
           selectedId: newSelectId,
         };
       }),
-    changeComponentStates: (newStates, options = { needNext: false }) =>
+    changeSelectComponentStates: (newStates, options = { needNext: false }) =>
       set((state) => {
         const { needNext } = options;
         const { selectedId, componentList } = state;
@@ -86,6 +90,21 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
           ),
           selectedId: needNext ? newSelectId : selectedId,
         };
+      }),
+    copySelectedComponent: () =>
+      set((state) => {
+        const { selectedId, componentList } = state;
+        const selectedComponent = componentList.find(
+          (c) => c.fe_id === selectedId
+        );
+
+        if (!selectedComponent) return state;
+
+        // 深拷贝并删除 `fe_id` 属性
+        const copiedComponent = cloneDeep(selectedComponent);
+        delete copiedComponent.fe_id;
+
+        return { copiedComponent };
       }),
   })
 );

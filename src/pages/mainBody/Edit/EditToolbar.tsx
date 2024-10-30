@@ -1,5 +1,5 @@
 import { Space, Button, Tooltip, Popconfirm } from "antd";
-import { DeleteOutlined, EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
+import { BlockOutlined, CopyOutlined, DeleteOutlined, EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 import useEditStore from "@/store/useEditStore";
 import { useMemo } from "react";
 
@@ -38,6 +38,20 @@ function EditToolbar() {
                     type={isLocked ? 'primary' : 'default'}
                     icon={<LockOutlined />}
                     onClick={() => changeComponentStates({ isLocked: !isLocked })}
+                />
+            </Tooltip>
+            <Tooltip title="复制">
+                <Button
+                    shape="circle"
+                    icon={<CopyOutlined />}
+                // onClick={() => changeComponentStates({ isLocked: !isLocked })}
+                />
+            </Tooltip>
+            <Tooltip title="粘贴">
+                <Button
+                    shape="circle"
+                    icon={<BlockOutlined />}
+                // onClick={() => changeComponentStates({ isLocked: !isLocked })}
                 />
             </Tooltip>
         </Space>
