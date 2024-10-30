@@ -42,6 +42,7 @@ function EditToolbar() {
             <Tooltip title="复制">
                 <Button
                     shape="circle"
+                    disabled={!selectedId}
                     icon={<CopyOutlined />}
                     onClick={copySelectedComponent}
                 />
