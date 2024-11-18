@@ -37,7 +37,10 @@ type ComponentsStateOperation = {
   removeSelectedComponent: () => void; // 移除选中组件
   changeSelectComponentStates: (
     newStates: Partial<ComponentInfoType>,
-    options?: { needNext: boolean }
+    options?: {
+      targetSelectedId?: string;
+      needNext?: boolean;
+    }
   ) => void; // 修改选中组件的状态
   copySelectedComponent: () => void; // 复制选中组件
   pasteCopiedComponent: () => void; // 粘贴复制的组件
@@ -96,16 +99,17 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
       }),
 
     // 修改选中组件的状态
-    changeSelectComponentStates: (newStates, options = { needNext: false }) =>
+    changeSelectComponentStates: (newStates, options) =>
       set((state) => {
-        const { needNext } = options;
+        const { needNext = false, targetSelectedId } = options || {};
         const { selectedId, componentList } = state;
-        const newSelectId = getNextSelectedId(selectedId, componentList);
+        const _selectedId = targetSelectedId ?? selectedId;
+        const newSelectId = getNextSelectedId(_selectedId, componentList);
         return {
           componentList: componentList.map(
-            (c) => (c.fe_id === selectedId ? { ...c, ...newStates } : c) // 更新选中组件状态
+            (c) => (c.fe_id === _selectedId ? { ...c, ...newStates } : c) // 更新选中组件状态
           ),
-          selectedId: needNext ? newSelectId : selectedId, // 根据选项更新选中 ID
+          selectedId: needNext ? newSelectId : _selectedId, // 根据选项更新选中 ID
         };
       }),
 

@@ -6,21 +6,26 @@ import { useMemo } from "react";
 import useGetComponentInfo from '@/hooks/useGetComponentInfo';
 const Layer = () => {
     const { selectedId, componentList, changeSelectComponentStates } = useEditStore();
-    console.log(123321, { componentList })
     return <div>
         {componentList.map(c => <div className="flex justify-between items-center p-2 border-b border-gray-200">
-            <span>{c.title || ''}</span>
+            <span className={`${selectedId === c.fe_id ? 'text-blue-400 font-bold' : ''}`}>{c.title || ''}</span>
             <span className='flex items-center gap-4'>
                 <Button
                     shape="circle"
+                    type={c?.isHidden ? 'primary' : 'default'}
                     icon={<EyeInvisibleOutlined />}
-                    onClick={() => changeSelectComponentStates({ isHidden: true }, { needNext: true })}
+                    onClick={() => changeSelectComponentStates({
+                        isHidden: !(c.isHidden)
+                    }, {
+                        needNext: c.isHidden ? false : true,
+                        targetSelectedId: c.fe_id,
+                    })}
                 />
                 <Button
                     shape="circle"
-                    type={c?.fe_id === selectedId ? 'primary' : 'default'}
+                    type={c?.isLocked ? 'primary' : 'default'}
                     icon={<LockOutlined />}
-                    onClick={() => changeSelectComponentStates({ isLocked: !(c?.fe_id === selectedId) })}
+                    onClick={() => changeSelectComponentStates({ isLocked: !(c.isLocked) })}
                 /></span>
 
         </div>)}
