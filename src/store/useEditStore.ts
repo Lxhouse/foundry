@@ -1,8 +1,8 @@
-import { ComponentPropsType } from "@/components";
-import { create } from "zustand";
-import cloneDeep from "lodash.clonedeep";
-import { getNextSelectedId } from "./utils";
-import { message } from "antd";
+import { ComponentPropsType } from '@/components';
+import { create } from 'zustand';
+import cloneDeep from 'lodash.clonedeep';
+import { getNextSelectedId } from './utils';
+import { message } from 'antd';
 
 // 定义组件信息的类型
 export type ComponentInfoType = {
@@ -23,7 +23,7 @@ export type ComponentsStateType = {
 
 // 初始化状态
 const INIT_STATE: ComponentsStateType = {
-  selectedId: "",
+  selectedId: '',
   componentList: [],
   copiedComponent: null,
 };
@@ -46,6 +46,7 @@ type ComponentsStateOperation = {
   pasteCopiedComponent: () => void; // 粘贴复制的组件
   selectPreviousComponent: () => void; // 选中上一个组件
   selectNextComponent: () => void; // 选中下一个组件
+  changeComponentOrder: (oldIndex: number, newIndex: number) => void; // 更换组件顺序
 };
 
 // 创建 Zustand 状态管理
@@ -126,7 +127,7 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         // 深拷贝并删除 `fe_id` 属性
         const copiedComponent = cloneDeep(selectedComponent);
         delete copiedComponent.fe_id; // 不保留 ID
-        message.success("复制成功"); // 提示用户复制成功
+        message.success('复制成功'); // 提示用户复制成功
         return { copiedComponent }; // 更新复制的组件
       }),
 
@@ -162,6 +163,16 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
         const index = componentList.findIndex((c) => c.fe_id === selectedId);
         const nextIndex = index < componentList.length - 1 ? index + 1 : 0; // 循环选择
         return { selectedId: componentList[nextIndex].fe_id };
+      }),
+
+    // 更换组件顺序
+    changeComponentOrder: (oldIndex: number, newIndex: number) =>
+      set((state) => {
+        const { componentList } = state;
+        const updatedComponentList = [...componentList];
+        const [movedComponent] = updatedComponentList.splice(oldIndex, 1); // 删除原位置的组件
+        updatedComponentList.splice(newIndex, 0, movedComponent); // 插入到新位置
+        return { componentList: updatedComponentList };
       }),
   })
 );
