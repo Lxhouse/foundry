@@ -59,13 +59,11 @@ const Layer: React.FC = () => {
     }
     return title || '';
   };
-  const onDragEnd = (oldIndx: number, newIndex: number) => {
-    changeComponentOrder(oldIndx, newIndex);
-  };
+
   return (
     <SortableContainer
       items={componentList.map((e) => ({ id: e?.fe_id, ...e }))}
-      onDragEnd={onDragEnd}
+      onDragEnd={changeComponentOrder}
     >
       {componentList.map(({ fe_id, title, isHidden, isLocked }) => (
         <SortableItem key={fe_id} id={fe_id}>
