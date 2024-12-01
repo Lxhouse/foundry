@@ -17,7 +17,6 @@ function Canvas() {
   const { loading } = useLoadEditData();
   const { selectedId, changeSelectedId, changeComponentOrder } = useEditStore();
   const { componentList } = useGetComponentInfo();
-  console.log(123321, { componentList });
   useBindCanvasKeyPress();
   if (loading) return <div>loading....</div>;
   return (

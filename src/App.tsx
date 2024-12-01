@@ -1,7 +1,8 @@
-import EditLayout from "@/layouts/EditLayout";
-
+import { useRoutes } from 'react-router-dom';
+import ROUTES from './router';
 function App() {
-  return <EditLayout />
+  const route = useRoutes(ROUTES);
+  return route;
 }
 
 export default App;

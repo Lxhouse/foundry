@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import cloneDeep from 'lodash.clonedeep';
 import { getNextSelectedId } from './utils';
 import { message } from 'antd';
+import { IPage } from '@/types/jsonSchemaType';
 
 // 定义组件信息的类型
 export type ComponentInfoType = {
@@ -17,12 +18,14 @@ export type ComponentInfoType = {
 // 定义状态类型
 export type ComponentsStateType = {
   selectedId: string; // 当前选中组件的 ID
+  pageExcludeComPInfo?: Exclude<IPage, 'config'>;
   componentList: ComponentInfoType[]; // 组件列表
   copiedComponent: ComponentInfoType | null; // 复制的组件
 };
 
 // 初始化状态
 const INIT_STATE: ComponentsStateType = {
+  pageExcludeComPInfo: void 0,
   selectedId: '',
   componentList: [],
   copiedComponent: null,
@@ -31,6 +34,9 @@ const INIT_STATE: ComponentsStateType = {
 // 定义状态操作类型
 type ComponentsStateOperation = {
   changeSelectedId: (id: string) => void; // 改变选中组件的 ID
+  setPageExcludeComPInfo: (
+    newPageExcludeComPInfo: Exclude<IPage, 'config'>
+  ) => void;
   resetComponents: (newStates: Partial<ComponentsStateType>) => void; // 重置组件状态
   addComponents: (newComponent: ComponentInfoType) => void; // 添加新组件
   changeComponentProps: (newProps: ComponentPropsType) => void; // 修改选中组件的属性
@@ -60,7 +66,8 @@ const useEditStore = create<ComponentsStateType & ComponentsStateOperation>(
 
     // 改变选中组件的 ID
     changeSelectedId: (id) => set({ selectedId: id }),
-
+    setPageExcludeComPInfo: (newPageExcludeComPInfo) =>
+      set({ pageExcludeComPInfo: newPageExcludeComPInfo }),
     // 添加新组件
     addComponents: (newComponent) =>
       set((state) => {
