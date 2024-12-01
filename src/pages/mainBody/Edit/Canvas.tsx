@@ -1,4 +1,3 @@
-import useLoadEditData from '@/hooks/useLoadEditData';
 import useGetComponentInfo from '@/hooks/useGetComponentInfo';
 import useEditStore, { ComponentInfoType } from '@/store/useEditStore';
 import { getComponentConfByType } from '@/components';
@@ -14,11 +13,10 @@ function getComponent(componentInfo: ComponentInfoType) {
   return Component ? <Component {...props} /> : <div>该组件未注册</div>;
 }
 function Canvas() {
-  const { loading } = useLoadEditData();
   const { selectedId, changeSelectedId, changeComponentOrder } = useEditStore();
   const { componentList } = useGetComponentInfo();
   useBindCanvasKeyPress();
-  if (loading) return <div>loading....</div>;
+
   return (
     <div className="w-[386px] h-5/6 bg-white rounded p-2 overflow-auto">
       <SortableContainer
