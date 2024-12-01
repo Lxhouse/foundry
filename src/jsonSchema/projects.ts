@@ -20,6 +20,7 @@ export const PROJECTS_LIST: IProject[] = [
 export const PAGE_LIST: IPage[] = [
   {
     id: '1',
+    fe_id: '1',
     name: '客流分析-线路',
     description: '客流分析-线路页面',
     config:
@@ -27,6 +28,7 @@ export const PAGE_LIST: IPage[] = [
   },
   {
     id: '2',
+    fe_id: '2',
     name: '客流分析-站点',
     description: '客流分析-站点页面',
     config: '',

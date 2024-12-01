@@ -8,6 +8,7 @@ export interface IProject {
 
 export interface IPage {
   id: string;
+  fe_id: string;
   name: string;
   description: string;
   config: string;

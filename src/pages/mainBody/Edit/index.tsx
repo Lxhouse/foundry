@@ -20,6 +20,7 @@ const Edit: FC<IEdit> = ({ page }) => {
       setPageExcludeComPInfo(args as Exclude<IPage, 'config'>);
       try {
         const ComponentInfoData = JSON.parse(config || '[]');
+
         resetComponents({
           componentList: ComponentInfoData,
           selectedId: ComponentInfoData[0]?.fe_id || '',
@@ -34,7 +35,7 @@ const Edit: FC<IEdit> = ({ page }) => {
         });
       }
     }
-  }, [page, setPageExcludeComPInfo, resetComponents]);
+  }, [page]);
 
   return (
     <div className="flex flex-col h-screen">
