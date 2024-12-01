@@ -24,16 +24,16 @@ const PagesContent = ({ pages }: { pages: IPage[] }) => (
         {/* 按钮区域 */}
         <div className="flex items-center mt-4 gap-2">
           <NavLink
-            to={`/preview/${page.id}`}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            预览
-          </NavLink>
-          <NavLink
             to={`/edit/${page.id}`}
             className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
             编辑
+          </NavLink>
+          <NavLink
+            to={`/preview/${page.id}`}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            预览
           </NavLink>
         </div>
       </div>
